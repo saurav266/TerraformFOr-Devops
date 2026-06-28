@@ -39,7 +39,7 @@ resource "aws_security_group" "my_security_group" {
 resource "aws_instance" "my_instance" {
 
   ami           = "ami-006f82a1d5a27da54"
-  instance_type = "t3.micro"
+  instance_type = var.ec2_instance_type
 
   key_name = aws_key_pair.my_key.key_name
 
@@ -48,7 +48,7 @@ resource "aws_instance" "my_instance" {
   ]
 
   root_block_device {
-    volume_size = 15
+    volume_size = var.ec2_root_storage_size
     volume_type = "gp3"
   }
 
