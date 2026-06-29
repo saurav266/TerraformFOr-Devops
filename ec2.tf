@@ -37,9 +37,15 @@ resource "aws_security_group" "my_security_group" {
 }
 
 resource "aws_instance" "my_instance" {
+  //count=2 // how many instance create
+  // if you want to laounch insance but in diffrent size use for_each
+  for_each=tomap({
+    "Tws-junnon"= "t3.micro"
+    "sk_two"= "t3.medium"
+  })
 
   ami           = "ami-006f82a1d5a27da54"
-  instance_type = var.ec2_instance_type
+  instance_type = each.value
 
   key_name = aws_key_pair.my_key.key_name
   user_data = file("install_nginx.sh")
@@ -55,6 +61,6 @@ resource "aws_instance" "my_instance" {
   }
 
   tags = {
-    Name = "first"
+    Name = each.key
   }
 }
