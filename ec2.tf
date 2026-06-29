@@ -44,6 +44,7 @@ resource "aws_instance" "my_instance" {
     "sk_two"= "t3.medium"
   })
 
+  depends_on = [aws_security_group.my_security_group, aws_key_pair.my_key]
   ami           = "ami-006f82a1d5a27da54"
   instance_type = each.value
 
